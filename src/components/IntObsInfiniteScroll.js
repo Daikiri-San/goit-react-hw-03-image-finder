@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import IntObserver from '../view/IntObserver';
 
-class IntObserver extends Component {
+class IntObsInfiniteScroll extends Component {
   componentDidMount() {
     const { fetchImages } = this.props;
     const guard = document.querySelector('#guardian');
@@ -13,4 +13,4 @@ class IntObserver extends Component {
   }
 }
 
-export default IntObserver;
+export default IntObsInfiniteScroll;
