@@ -16,7 +16,7 @@ const List = styled.ul`
   margin-right: auto;
 `;
 
-function ImageGallery({ listOfImages, openModal }) {
+function ImageGallery({ listOfImages, onImageClick }) {
   return (
     <List>
       {listOfImages.map(({ id, largeImageURL, webformatURL, tags }) => (
@@ -25,7 +25,7 @@ function ImageGallery({ listOfImages, openModal }) {
           tags={tags}
           imagesForList={webformatURL}
           largeImageURL={largeImageURL}
-          openModal={openModal}
+          onImageClick={onImageClick}
         ></ImageGalleryItem>
       ))}
     </List>

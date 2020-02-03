@@ -21,21 +21,30 @@ const ModalWindow = styled.div`
 
 class Modal extends Component {
   componentDidMount() {
-    const { closeModalOnESC } = this.props;
-    window.addEventListener('keydown', closeModalOnESC);
+    window.addEventListener('keydown', this.closeModalOnESC);
   }
 
   componentWillUnmount() {
-    const { closeModalOnESC } = this.props;
-    window.removeEventListener('keydown', closeModalOnESC);
+    window.removeEventListener('keydown', this.closeModalOnESC);
   }
 
+  closeModalOnESC = ({ code }) => {
+    if (code !== 'Escape') {
+      return;
+    }
+    this.props.closeModal();
+  };
+
+  stopPropagationOnModal = e => {
+    e.stopPropagation();
+  };
+
   render() {
-    const { image, closeModal } = this.props;
+    const { children, closeModal } = this.props;
     return (
       <Overlay onClick={closeModal}>
-        <ModalWindow>
-          <img src={image} alt="" />
+        <ModalWindow onClick={this.stopPropagationOnModal}>
+          {children}
         </ModalWindow>
       </Overlay>
     );

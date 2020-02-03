@@ -35,21 +35,17 @@ class App extends Component {
     });
     const { images, page, searchQuery } = this.state;
     try {
-      const incommingImages = await pixadayApi.fetchArticlesWithQuery(
+      const incommingImages = await pixadayApi.fetchImagesWithQuery(
         searchQuery,
         page,
       );
       this.setState(prevState => ({
         images: [...prevState.images, ...incommingImages.hits],
         page: prevState.page + 1,
+        allImagesGotten: images.length === incommingImages.totalHits,
       }));
       // console.log(`IMAGES===${images.map(item => item.id)}`);
       // console.log(`SETSET===${[...new Set(images.map(item => item.id))]}`);
-      if (images.length === incommingImages.totalHits) {
-        this.setState({
-          allImagesGotten: true,
-        });
-      }
     } catch (error) {
       this.setState({ error });
     } finally {
@@ -59,26 +55,13 @@ class App extends Component {
     }
   };
 
-  openModal = ({ target }) => {
-    const largeImage = target.dataset.source;
+  openModalOnSelectImage = largeImage => {
     this.setState({
       modalImage: largeImage,
     });
   };
 
-  closeModal = ({ target }) => {
-    if (target.hasAttribute('src')) {
-      return;
-    }
-    return this.setState({
-      modalImage: '',
-    });
-  };
-
-  closeModalOnESC = ({ code }) => {
-    if (code !== 'Escape') {
-      return;
-    }
+  closeModal = () => {
     return this.setState({
       modalImage: '',
     });
@@ -87,7 +70,6 @@ class App extends Component {
   handleSearchFormSubmit = query => {
     this.setState({
       searchQuery: query,
-      allImagesGotten: false,
       images: [],
       page: 1,
     });
@@ -106,17 +88,18 @@ class App extends Component {
         )}
         {loading && <Spinner />}
         {images.length > 0 && (
-          <ImageGallery openModal={this.openModal} listOfImages={images} />
+          <ImageGallery
+            onImageClick={this.openModalOnSelectImage}
+            listOfImages={images}
+          />
         )}
         {images.length > 0 && !allImagesGotten && (
           <IntObsInfiniteScroll fetchImages={this.fetchImages} />
         )}
         {modalImage && (
-          <Modal
-            closeModal={this.closeModal}
-            closeModalOnESC={this.closeModalOnESC}
-            image={modalImage}
-          />
+          <Modal closeModal={this.closeModal}>
+            <img src={modalImage} alt="" />
+          </Modal>
         )}
       </Layout>
     );

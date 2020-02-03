@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const fetchArticlesWithQuery = async (searchQuery, page = 0) => {
-  // const sorryCors = 'https://cors-anywhere.herokuapp.com/';
-  axios.defaults.baseURL = `https://pixabay.com/api`;
-  const key = '14527568-6591a78188764a7d597b0a4aa';
+// const sorryCors = 'https://cors-anywhere.herokuapp.com/';
+axios.defaults.baseURL = `https://pixabay.com/api`;
+const key = '14527568-6591a78188764a7d597b0a4aa';
 
+const fetchImagesWithQuery = async (searchQuery, page = 0) => {
   const { data } = await axios.get('/', {
     params: {
       q: searchQuery,
@@ -20,5 +20,5 @@ const fetchArticlesWithQuery = async (searchQuery, page = 0) => {
 };
 
 export default {
-  fetchArticlesWithQuery,
+  fetchImagesWithQuery,
 };

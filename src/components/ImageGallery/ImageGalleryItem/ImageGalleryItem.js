@@ -21,14 +21,18 @@ const Image = styled.img`
   }
 `;
 
-function ImageGalleryItem({ imagesForList, tags, largeImageURL, openModal }) {
+function ImageGalleryItem({
+  imagesForList,
+  tags,
+  largeImageURL,
+  onImageClick,
+}) {
   return (
     <ListItem>
       <Image
         alt={tags}
         src={imagesForList}
-        data-source={largeImageURL}
-        onClick={openModal}
+        onClick={() => onImageClick(largeImageURL)}
       ></Image>
     </ListItem>
   );

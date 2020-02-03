@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import IntObserver from '../view/IntObserver';
 
 class IntObsInfiniteScroll extends Component {
+  guardian = React.createRef();
+
   componentDidMount() {
     const { fetchImages } = this.props;
-    const guard = document.querySelector('#guardian');
-    IntObserver(guard, fetchImages);
+    IntObserver(this.guardian.current, fetchImages);
   }
 
   render() {
-    return <div id="guardian"></div>;
+    return <div ref={this.guardian}></div>;
   }
 }
 
